@@ -11,6 +11,10 @@ const app = express();
 
 //* configure application 
 
+//* setting view
+app.set("view engine", "pug");
+app.set("views", process.cwd() + "/src/views"); 
+
 //* Middleware
 const logger = morgan("dev"); //* morgan has 5 options
 

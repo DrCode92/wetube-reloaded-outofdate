@@ -6,14 +6,15 @@
 /login
 /search
 <!--* users router -->
-/users/edit
-/users/delete
+/users/:id -> See User
+/users/logout -> Log Out
+/users/edit -> Edit My Profile
+/users/delete -> Delete My Profile
 <!--* videos router -->
-/videos/watch
-/videos/edit
-/videos/delete
-/videos/comments
-/videos/comments/delete
+/videos/:id -> See Video
+/videos/:id/edit -> Edit Video
+/videos/:id/delete -> Delete Video
+/videos/upload -> Upload Video
 
 # 14. SETUP
 0. Your First NodeJS Project
@@ -96,3 +97,20 @@
 6. Planning Routes
 7. URL Parameters part ONE
 8. URL Parameters part TWO 
+
+# 17. TEMPLATES
+0. Returning HTML
+1. Configuring Pug
+   1. npm install pug
+   2. app.set("view engine", "pug")
+   3. app.set("views", process.cwd() + "/src/views")
+2. Partials
+3. Extending Templates
+4. Variables to Templates
+5. Recap
+6. MVP Styles
+   1. link(rel="stylesheet" href="https://unpkg.com/mvp.css")
+7. Conditionals
+8. Iteration
+9.  Mixins
+10. Recap
