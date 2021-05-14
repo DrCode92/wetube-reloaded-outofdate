@@ -45,7 +45,28 @@ export const getEdit = (req, res) => {
 
 export const postEdit = (req, res) => {
     const {id} = req.params;
+    const {title} = req.body;
+    videos[id - 1].title = title;
     return res.redirect(`/videos/${id}`);
+}
+
+export const getUpload = (req, res) => {
+    return res.render("upload", {pageTitle: "Upload Video"});
+}
+
+export const postUpload = (req, res) => {
+    //todo here we will add a video to the videos array 
+    const {title} = req.body;
+    const newVideo = {
+        title,
+        rating: 0,
+        comments: 0,
+        createdAt: "just now",
+        views: 0,
+        id: videos.length + 1,
+    }
+    videos.push(newVideo);
+    return res.redirect("/");
 }
 
 export const search = (req, res) => {
@@ -55,8 +76,4 @@ export const search = (req, res) => {
 export const deleteVideo = (req, res) => {
     console.log(req.params);
     return res.send("<h1>Delete Video</h1>");
-}
-
-export const upload = (req, res) => {
-    return res.send("<h1>Upload Video</h1>");
 }
