@@ -1,17 +1,12 @@
 
-const fakeUser = {
-    username: "Nicolas",
-    loggedIn: true
-}
 
-export const trending = (req, res) => {
-    const videos = [
+let videos = [
         {
             title: "First Video",
             rating: 5,
             comments: 2,
             createdAt: "2 minutes ago",
-            views: 59,
+            views: 1,
             id: 1,
         },
         {
@@ -20,7 +15,7 @@ export const trending = (req, res) => {
             comments: 2,
             createdAt: "2 minutes ago",
             views: 59,
-            id: 1,
+            id: 2,
         },
         {
             title: "Third Video",
@@ -28,18 +23,29 @@ export const trending = (req, res) => {
             comments: 2,
             createdAt: "2 minutes ago",
             views: 59,
-            id: 1,
+            id: 3,
         },
     ];
-    return res.render("home", {pageTitle: "Home", fakeUser, videos});
+export const trending = (req, res) => {
+    return res.render("home", {pageTitle: "Home", videos});
 }
 
-export const see = (req, res) => {
-    return res.render("watch", {pageTitle: "Watch"});
+export const watch = (req, res) => {
+    //* const id = req.params.id; <-- under ES6
+    const {id} = req.params; //* ES6
+    const videoNumber = videos[id - 1]
+    return res.render("watch", {pageTitle: `Watching: ${videoNumber.title}`, videoNumber});
 }
 
-export const edit = (req, res) => {
-    return res.render("edit", {pageTitle: "Edit"});
+export const getEdit = (req, res) => {
+    const {id} = req.params;
+    const videoNumber = videos[id - 1];
+    return res.render("edit", {pageTitle: `Editing: ${videoNumber.title}`, videoNumber});
+}
+
+export const postEdit = (req, res) => {
+    const {id} = req.params;
+    return res.redirect(`/videos/${id}`);
 }
 
 export const search = (req, res) => {

@@ -114,3 +114,50 @@
 8. Iteration
 9.  Mixins
 10. Recap
+
+# 18. NONGODB AND MONGOOSE
+0. Array Database part ONE
+1. Array Database part TWO
+   1. a(href="edit") <- (relative url)
+      1. localhost:4000/profile/edit-profile/password
+         1. a(href="potato")
+            1. localhost:4000/profile/edit-profile/potato
+   2. a(href="/edit") <- root + /edit (absolute url)
+      1. localhost:4000/profile/edit-profile/password
+         1. a(href="/potato")
+            1. localhost:4000/potato
+2. Edit Video part ONE
+   1. GET request <- 데이터를 받는게 목적
+      1. searching for something
+         1. ?title=Third+Video <- form에 있는 정보가 url에 포함됨
+   2. POST request <- 수정/삭제가 목적
+      1. send file
+      2. change a value in database
+3. Edit Video part TWO
+   1. getting from form data
+      1. app.use(express.urlencoded({extended: true}));
+4. Recap
+5. More Practice part ONE
+6. More Practice part TWO
+7. Introduction to MongoDB
+8. Connecting to Mongo
+9.  CRUD Introduction
+10. Video Model
+11. Our First Query part ONE
+12. Our First Query part TWO
+13. Async Await
+14. Returns and Renders
+15. Creating a Video part ONE
+16. Creating a Video part TWO
+17. Exceptions and Validation
+18. More Schema
+19. Video Detail
+20. Edit Video part ONE
+21. Edit Video part TWO
+22. Edit Video part THREE
+23. Middlewares
+24. Statics
+25. Delete Video
+26. Search part ONE
+27. Search part TWO
+28. Conclusions

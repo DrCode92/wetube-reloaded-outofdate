@@ -21,6 +21,9 @@ const logger = morgan("dev"); //* morgan has 5 options
 //* router와 무관하게 동작
 app.use(logger);
 
+//* form data 가져오기
+app.use(express.urlencoded({extended: true}));
+
 app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
