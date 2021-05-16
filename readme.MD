@@ -140,10 +140,27 @@
 5. More Practice part ONE
 6. More Practice part TWO
 7. Introduction to MongoDB
+   1. Document-based database
+      1. Rich JSON Documents
+      2. Powerful query language
+   2. Installation MongoDB
+      1. brew tap mongodb/brew
+      2. brew install mongodb-community@4.4
+   3. To run/stop MongoDB
+      1. brew services start/stop mongodb-community@4.4
 8. Connecting to Mongo
+   1. mongoose
+      1. node.js 와 mongoDB 연결 역할
+      2. npm install mongoose
+   2. Create DB
+      1. mongoose.connect("mongodb://127.0.0.1:27017/wetube");
 9.  CRUD Introduction
 10. Video Model
+    1.  schema : DB 형식 정의
 11. Our First Query part ONE
+    1.  Model.find() 사용법
+        1.  callback function : 선순위 동작(configuration) 확인 후 함수 호출/실행
+        2.  promise : callback의 최신 버전
 12. Our First Query part TWO
 13. Async Await
 14. Returns and Renders

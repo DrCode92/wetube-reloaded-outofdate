@@ -1,52 +1,42 @@
+import Video from "../models/Video";
 
+//* callback function
+//! 실행 1
+//? console.log("start"); 
 
-let videos = [
-        {
-            title: "First Video",
-            rating: 5,
-            comments: 2,
-            createdAt: "2 minutes ago",
-            views: 1,
-            id: 1,
-        },
-        {
-            title: "Second Video",
-            rating: 5,
-            comments: 2,
-            createdAt: "2 minutes ago",
-            views: 59,
-            id: 2,
-        },
-        {
-            title: "Third Video",
-            rating: 5,
-            comments: 2,
-            createdAt: "2 minutes ago",
-            views: 59,
-            id: 3,
-        },
-    ];
-export const trending = (req, res) => {
-    return res.render("home", {pageTitle: "Home", videos});
+//! 실행 마지막
+//? Video.find({}, (error, videoMember) => {
+//?     if(error) {
+//?        return res.render("server-error");
+//?     }
+//?     return res.render("home", {pageTitle: "Home", videoMember});
+//? });
+
+//! 실행 2
+//? console.log("finished");
+
+//* primise
+export const home = async (req, res) => {
+    const videoMember = await Video.find({}); 
+    //* await 다음 구문이 완료할 때 까지 대기
+    return res.render("home", {pageTitle: "Home", videoMember}); 
 }
 
-export const watch = (req, res) => {
+export const watch = async (req, res) => {
     //* const id = req.params.id; <-- under ES6
     const {id} = req.params; //* ES6
-    const videoNumber = videos[id - 1]
-    return res.render("watch", {pageTitle: `Watching: ${videoNumber.title}`, videoNumber});
+    const videoMember = await Video.findById(id);
+    return res.render("watch", {pageTitle: videoMember.title, videoMember});
 }
 
 export const getEdit = (req, res) => {
     const {id} = req.params;
-    const videoNumber = videos[id - 1];
-    return res.render("edit", {pageTitle: `Editing: ${videoNumber.title}`, videoNumber});
+    return res.render("edit", {pageTitle: `Editing`});
 }
 
 export const postEdit = (req, res) => {
     const {id} = req.params;
     const {title} = req.body;
-    videos[id - 1].title = title;
     return res.redirect(`/videos/${id}`);
 }
 
@@ -54,19 +44,27 @@ export const getUpload = (req, res) => {
     return res.render("upload", {pageTitle: "Upload Video"});
 }
 
-export const postUpload = (req, res) => {
-    //todo here we will add a video to the videos array 
-    const {title} = req.body;
-    const newVideo = {
-        title,
-        rating: 0,
-        comments: 0,
-        createdAt: "just now",
-        views: 0,
-        id: videos.length + 1,
+export const postUpload = async (req, res) => {
+    const { title, description, hashtags } = req.body;
+    try {
+        await Video.create({
+            title: title,
+            description: description,
+            //? createdAt: Date.now(),
+            hashtags: hashtags.split(",").map(word => `#${word}`),
+            //? meta: {
+            //?     views: 0,
+            //?     rating: 0,
+            //? }
+        })
+        return res.redirect("/");
+    } catch(error) {
+        console.log(error);
+        return res.render("upload", {
+            pageTitle: "Upload Video",
+            errorMessage: error._message,
+        });
     }
-    videos.push(newVideo);
-    return res.redirect("/");
 }
 
 export const search = (req, res) => {
