@@ -26,17 +26,44 @@ export const watch = async (req, res) => {
     //* const id = req.params.id; <-- under ES6
     const {id} = req.params; //* ES6
     const videoMember = await Video.findById(id);
+    if(!videoMember) {
+        return res.render("404", {pageTitle: "Video not found."});
+    }
     return res.render("watch", {pageTitle: videoMember.title, videoMember});
 }
 
-export const getEdit = (req, res) => {
+export const getEdit = async (req, res) => {
     const {id} = req.params;
-    return res.render("edit", {pageTitle: `Editing`});
+    //! videoMember is object
+    const videoMember = await Video.findById(id);
+    if(!videoMember) {
+        return res.render("404", {pageTitle: "Video not found."})
+    }
+    return res.render("edit", {pageTitle: `Edit: ${videoMember.title}`, videoMember});
 }
 
-export const postEdit = (req, res) => {
+export const postEdit = async (req, res) => {
     const {id} = req.params;
-    const {title} = req.body;
+    const {title, description, hashtags} = req.body;
+    //* check video exists
+    const videoMember = await Video.exists({ _id: id });
+    if(!videoMember) {
+        return res.render("404", { pageTitle: "Video not found." });
+    }
+    //* updatd DB
+    //! Video is model, different with videoMember, model can only use mongoose function
+    await Video.findByIdAndUpdate(id, { 
+        title, 
+        description,
+        hashtags: hashtags.split(",").map((word) => word.startsWith("#") ? word : `#${word}`),
+    })
+    //* update DB - old version
+    /*
+    videoMember.title = title;
+    videoMember.description = description;
+    videoMember.hashtags = hashtags.split(",").map((word) => word.startsWith("#") ? word : `#${word}`);
+    await videoMember.save();
+    */
     return res.redirect(`/videos/${id}`);
 }
 
@@ -51,7 +78,7 @@ export const postUpload = async (req, res) => {
             title: title,
             description: description,
             //? createdAt: Date.now(),
-            hashtags: hashtags.split(",").map(word => `#${word}`),
+            hashtags: hashtags.split(",").map(word => word.startsWith("#") ? word : `#${word}`),
             //? meta: {
             //?     views: 0,
             //?     rating: 0,
