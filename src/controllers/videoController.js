@@ -102,3 +102,4 @@ export const deleteVideo = (req, res) => {
     console.log(req.params);
     return res.send("<h1>Delete Video</h1>");
 }
+
